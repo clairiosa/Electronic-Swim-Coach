@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Electronic-Swim-Coach.iml" filepath="$PROJECT_DIR$/Electronic-Swim-Coach.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/openCV_Java/openCV_Java.iml" filepath="$PROJECT_DIR$/openCV_Java/openCV_Java.iml" />
     </modules>
   </component>
 </project>
