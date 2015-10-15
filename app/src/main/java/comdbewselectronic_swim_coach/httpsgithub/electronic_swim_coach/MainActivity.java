@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.view.Menu;
 //import org.opencv.android.  //how tto import opencv needed classes
 
-public class HelloActivity extends Activity {
+public class MainActivity extends Activity {
 	MediaPlayer mpSplash;
  //Called when the activity is first created
 	

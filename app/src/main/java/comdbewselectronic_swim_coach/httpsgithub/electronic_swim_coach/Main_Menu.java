@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class myMenu extends Activity{
+public class Main_Menu extends Activity{
 	
 
 	@Override

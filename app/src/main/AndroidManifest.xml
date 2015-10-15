@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach" >
     <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@mipmap/icon" android:allowBackup="true">
-        <activity android:label="@string/app_name" android:name=".HelloActivity">
+        <activity android:label="@string/app_name" android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name=".myMenu">
+        <activity android:label="@string/app_name" android:name=".Main_Menu">
             <intent-filter>
                 <action android:name="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.CLEARSCREEN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
