@@ -4,13 +4,23 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
+
+import org.opencv.android.OpenCVLoader;
 //import org.opencv.android.  //how tto import opencv needed classes
 
 public class MainActivity extends Activity {
 	MediaPlayer mpSplash;
  //Called when the activity is first created
-	
+	static{
+		if(!OpenCVLoader.initDebug()){
+			Log.i("opencv", "opencv initialization failed");
+		}else{
+			Log.i("opencv", "opencv initialization successful");
+		}
+ 	}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
