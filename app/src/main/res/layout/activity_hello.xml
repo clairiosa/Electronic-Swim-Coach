@@ -39,8 +39,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Begin"
-        android:id="@+id/record_button"
+        android:text="Record"
+        android:id="@+id/bRecording"
         android:layout_above="@+id/button2"
         android:layout_toRightOf="@+id/textView1"
         android:layout_toEndOf="@+id/textView1" />
