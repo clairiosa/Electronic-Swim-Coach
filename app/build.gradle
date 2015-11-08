@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach"
+        applicationId "com.bewmens.ElectronicSwimCoach"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

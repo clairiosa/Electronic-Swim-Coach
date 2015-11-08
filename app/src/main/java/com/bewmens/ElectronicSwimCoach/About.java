@@ -1,8 +1,7 @@
-package comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach;
+package com.bewmens.ElectronicSwimCoach;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 public class About extends Activity{
 	@Override

@@ -6,13 +6,14 @@
     android:weightSum="1">
 
     <TextView
-        android:layout_width="340dp"
+        android:layout_width="374dp"
         android:layout_height="wrap_content"
         android:id="@+id/textAbout"
         android:textSize="20dp"
-        android:layout_gravity="center"
         android:ems="10"
-        android:text="      Hello and welcome to your Electronic Swim Coach. This product was created by Jonathan Oommen and David Bews, the founders of Bewmens. Bewmens is a technology organization located in Ottawa, Ontario, and is anticipated to be one the fastest growing companies in 2015. Any copyright infrigment or illegal reasale of this product is strictly prohibited. Violators will be procecuted to the full extent of the law. ">
+        android:text="      Hello and welcome to your Electronic Swim Coach. This product was created by Jonathan Oommen and David Bews, the founders of Bewmens. Bewmens is a technology organization located in Ottawa, Ontario, and is anticipated to be one the fastest growing companies in 2015. Any copyright infrigment or illegal reasale of this product is strictly prohibited. Violators will be procecuted to the full extent of the law. "
+        android:layout_margin="5dp"
+        android:layout_gravity="center">
     </TextView>
 
 </LinearLayout>

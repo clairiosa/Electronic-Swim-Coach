@@ -1,4 +1,4 @@
-package comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach;
+package com.bewmens.ElectronicSwimCoach;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

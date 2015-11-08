@@ -1,4 +1,4 @@
-package comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach;
+package com.bewmens.ElectronicSwimCoach;
 
 /**
  * Created by JonnyOommen on 16/10/2015.

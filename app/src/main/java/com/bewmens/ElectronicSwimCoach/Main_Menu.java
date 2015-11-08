@@ -1,4 +1,4 @@
-package comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach;
+package com.bewmens.ElectronicSwimCoach;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -43,6 +43,18 @@ public class Main_Menu extends Activity{
 				mpButtonClick.start();
 			}
 		});
+
+		//Begin button
+/*
+		Button bCamera = (Button) findViewById(R.id.record_button);
+		bCamera.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent("comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.RECORDCAMERA"));
+				mpButtonClick.start();
+			}
+		});
+		*/
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {

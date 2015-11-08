@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach" >
+    package="com.bewmens.ElectronicSwimCoach" >
     <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@mipmap/icon" android:allowBackup="true">
-        <activity android:label="@string/app_name" android:name=".MainActivity">
+        <activity android:label="@string/app_name" android:name="com.bewmens.com.bewmens.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name=".Main_Menu">
+        <activity android:label="@string/app_name" android:name="com.bewmens.com.bewmens.Main_Menu">
             <intent-filter>
                 <action android:name="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.CLEARSCREEN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name=".tutorial1">
+        <activity android:label="@string/app_name" android:name="com.bewmens.com.bewmens.tutorial1">
             <intent-filter>
                 <action android:name="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.TUTORIALONE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:theme="@android:style/Theme.Dialog" android:label="@string/app_name" android:name=".About">
+        <activity android:theme="@android:style/Theme.Dialog" android:label="@string/app_name" android:name="com.bewmens.com.bewmens.About">
             <intent-filter>
                 <action android:name="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.ABOUT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
