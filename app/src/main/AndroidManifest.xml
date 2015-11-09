@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bewmens.ElectronicSwimCoach" >
+
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
     <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@mipmap/icon" android:allowBackup="true">
+
+
+
         <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.Main_Menu">
             <intent-filter>
                 <action android:name="com.bewmens.ElectronicSwimCoach.CLEARSCREEN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
         <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.tutorial1">
             <intent-filter>
                 <action android:name="com.bewmens.ElectronicSwimCoach.TUTORIALONE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.Recording">
+
+        <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.CameraPreview">
         <intent-filter>
-            <action android:name="com.bewmens.ElectronicSwimCoach.RECORDING"/>
+            <action android:name="com.bewmens.ElectronicSwimCoach.CAMERA"/>
             <category android:name="android.intent.category.DEFAULT"/>
         </intent-filter>
+
     </activity>
+
         <activity android:theme="@android:style/Theme.Dialog" android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.About">
             <intent-filter>
                 <action android:name="com.bewmens.ElectronicSwimCoach.ABOUT"/>

@@ -28,17 +28,17 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.splash);
         
         mpSplash = MediaPlayer.create(this, R.raw.mario);
-        mpSplash.start();
+        //mpSplash.start();
         
         Thread logoTimer= new Thread(){
         	public void run(){
         	try{
         		int logoTimer = 0;
-        		while(logoTimer<5000) {
+        		while(logoTimer<500) {
         			sleep(100);
         			logoTimer= logoTimer+100;
         		}
-        		startActivity(new Intent("comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.CLEARSCREEN"));
+        		startActivity(new Intent("com.bewmens.ElectronicSwimCoach.CLEARSCREEN"));
         	} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

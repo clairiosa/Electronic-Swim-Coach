@@ -18,7 +18,7 @@ public class Main_Menu extends Activity{
 	protected void onCreate(Bundle savedState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedState);
-		setContentView(R.layout.activity_hello);
+		setContentView(R.layout.activity_main);
 		
 		//set up the button sound
 		final MediaPlayer mpButtonClick = MediaPlayer.create(this, R.raw.button_click);
@@ -50,7 +50,7 @@ public class Main_Menu extends Activity{
 		bRecording.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.RECORDING"));
+				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.CAMERA"));
 				mpButtonClick.start();
 			}
 		});

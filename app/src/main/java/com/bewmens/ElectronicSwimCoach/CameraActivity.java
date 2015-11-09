@@ -6,13 +6,12 @@ package com.bewmens.ElectronicSwimCoach;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 
-public class Recording extends Activity {
-    @Override
+public class CameraActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about);
+        setContentView(R.layout.simple_camera);
     }
 }
