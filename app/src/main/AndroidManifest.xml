@@ -4,8 +4,10 @@
 
 
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front.autofocus" android:required="false"/>
 
     <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@mipmap/icon" android:allowBackup="true">
 
@@ -32,7 +34,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.CameraPreview">
+        <activity android:label="@string/app_name"
+                  android:name=".CameraActivityCV">
         <intent-filter>
             <action android:name="com.bewmens.ElectronicSwimCoach.CAMERA"/>
             <category android:name="android.intent.category.DEFAULT"/>
