@@ -11,35 +11,43 @@
 
     <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@mipmap/icon" android:allowBackup="true">
 
-
-
-        <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.Main_Menu">
+        <activity
+            android:name=".Main_Menu"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.bewmens.ElectronicSwimCoach.CLEARSCREEN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
-        <activity android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.tutorial1">
+        <activity
+            android:name="tutorial1"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.bewmens.ElectronicSwimCoach.TUTORIALONE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
-        <activity android:label="@string/app_name"
-                  android:name=".CameraActivityCV">
-        <intent-filter>
-            <action android:name="com.bewmens.ElectronicSwimCoach.CAMERA"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-        </intent-filter>
+        <!-- TODO Change the orientation to something more workable.  Currently a bit of a hack. -->
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <intent-filter>
+                <action android:name="com.bewmens.ElectronicSwimCoach.CAMERA"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
 
     </activity>
 
