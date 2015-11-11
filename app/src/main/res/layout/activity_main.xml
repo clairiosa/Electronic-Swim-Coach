@@ -10,47 +10,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HelloActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
-        android:text="Main Menu" />
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Filming"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/textView1"
-        android:layout_toStartOf="@+id/textView1" />
+        android:text="Tutorial"
+        android:layout_above="@+id/button2"
+        android:layout_alignStart="@+id/bRecording" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="69dp"
         android:text="About Us"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/button1" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Record"
+        android:text="Camera"
         android:id="@+id/bRecording"
-        android:layout_above="@+id/button2"
-        android:layout_toRightOf="@+id/textView1"
-        android:layout_toEndOf="@+id/textView1" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Left"
         android:id="@+id/bLeft"
-        android:layout_below="@+id/button2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         android:layout_alignStart="@+id/button1" />
 
     <Button
@@ -58,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="Right"
         android:id="@+id/bRight"
-        android:layout_below="@+id/button2"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>
