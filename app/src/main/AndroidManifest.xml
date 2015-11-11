@@ -1,30 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach" >
+    package="com.bewmens.ElectronicSwimCoach" >
+
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front.autofocus" android:required="false"/>
+
     <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@mipmap/icon" android:allowBackup="true">
-        <activity android:label="@string/app_name" android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name=".Main_Menu">
+
+        <activity
+            android:name=".Main_Menu"
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.CLEARSCREEN"/>
+                <action android:name="com.bewmens.ElectronicSwimCoach.CLEARSCREEN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name=".tutorial1">
+
+        <activity
+            android:name="tutorial1"
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.TUTORIALONE"/>
+                <action android:name="com.bewmens.ElectronicSwimCoach.TUTORIALONE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:theme="@android:style/Theme.Dialog" android:label="@string/app_name" android:name=".About">
+
+        <!-- TODO Change the orientation to something more workable.  Currently a bit of a hack. -->
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
-                <action android:name="comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.ABOUT"/>
+                <action android:name="com.bewmens.ElectronicSwimCoach.CAMERA"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+    </activity>
+
+        <activity android:theme="@android:style/Theme.Dialog" android:label="@string/app_name" android:name="com.bewmens.ElectronicSwimCoach.About">
+            <intent-filter>
+                <action android:name="com.bewmens.ElectronicSwimCoach.ABOUT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
     </application>
 </manifest>

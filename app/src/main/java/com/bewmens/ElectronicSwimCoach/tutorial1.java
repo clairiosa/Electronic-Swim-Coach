@@ -1,16 +1,12 @@
-package comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach;
+package com.bewmens.ElectronicSwimCoach;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -20,9 +16,6 @@ import org.opencv.core.Size;
 import org.opencv.core.Core;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgcodecs.Imgcodecs; // imread, imwrite, etc
-import java.io.PrintWriter;
-import org.opencv.core.Point;
-import org.opencv.videoio.VideoCapture;   // VideoCapture
 
 
 public class tutorial1 extends Activity  {

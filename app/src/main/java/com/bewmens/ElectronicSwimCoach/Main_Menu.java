@@ -1,4 +1,4 @@
-package comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach;
+package com.bewmens.ElectronicSwimCoach;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,7 +18,7 @@ public class Main_Menu extends Activity{
 	protected void onCreate(Bundle savedState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedState);
-		setContentView(R.layout.activity_hello);
+		setContentView(R.layout.activity_main);
 		
 		//set up the button sound
 		final MediaPlayer mpButtonClick = MediaPlayer.create(this, R.raw.button_click);
@@ -29,7 +29,7 @@ public class Main_Menu extends Activity{
 		bStartFilming.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent("comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.TUTORIALONE"));
+				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.TUTORIALONE"));
 				mpButtonClick.start();
 			}
 		});
@@ -39,10 +39,22 @@ public class Main_Menu extends Activity{
 		bAbout.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent("comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.ABOUT"));
+				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.ABOUT"));
 				mpButtonClick.start();
 			}
 		});
+
+		//Begin button
+
+		Button bRecording = (Button) findViewById(R.id.bRecording);
+		bRecording.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.CAMERA"));
+				mpButtonClick.start();
+			}
+		});
+
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,7 +68,7 @@ public class Main_Menu extends Activity{
 		switch (item.getItemId()) {
 		
 		case R.id.menuSweet:
-			startActivity(new Intent("comdbewselectronic_swim_coach.httpsgithub.electronic_swim_coach.SWEET"));
+			startActivity(new Intent("com.bewmens.ElectronicSwimCoach.SWEET"));
 			return true;
 		case R.id.menuToast:
 			Toast display = Toast.makeText(this, "HOWAREYOU?", Toast.LENGTH_SHORT);
