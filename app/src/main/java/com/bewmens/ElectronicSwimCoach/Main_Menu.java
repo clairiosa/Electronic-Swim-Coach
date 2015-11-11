@@ -1,9 +1,13 @@
 package com.bewmens.ElectronicSwimCoach;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,15 +15,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class Main_Menu extends Activity{
-	
+import java.util.Locale;
+
+public class Main_Menu extends Activity implements TextToSpeech.OnInitListener{
+
+
+    private TextToSpeech mEngine;
+    private Vibrator mVibrator;
 
 	@Override
 	protected void onCreate(Bundle savedState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedState);
 		setContentView(R.layout.activity_main);
-		
+
 		//set up the button sound
 		final MediaPlayer mpButtonClick = MediaPlayer.create(this, R.raw.button_click);
 		
@@ -55,6 +64,23 @@ public class Main_Menu extends Activity{
 			}
 		});
 
+        Button bLeft = (Button) findViewById(R.id.bLeft);
+        bLeft.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                speakLeft();
+            }
+        });
+
+        Button bRight = (Button) findViewById(R.id.bRight);
+        bRight.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                speakRight();
+            }
+        });
+
+        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        mEngine = new TextToSpeech(this, this);
+
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,5 +103,23 @@ public class Main_Menu extends Activity{
 		}
 		return false;
 	}
-	
+
+    @Override
+    public void onInit(int status) {
+        Log.d("Speech", "OnInit - Status [" + status + "]");
+
+        if (status == TextToSpeech.SUCCESS) {
+            Log.d("Speech", "Success!");
+            mEngine.setLanguage(Locale.UK);
+        }
+    }
+
+    private void speakLeft() {
+        mEngine.speak("Left.", TextToSpeech.QUEUE_FLUSH, null, null);
+        mVibrator.vibrate(500);
+    }
+    private void speakRight() {
+        mEngine.speak("Right.", TextToSpeech.QUEUE_FLUSH, null, null);
+        mVibrator.vibrate(new long[]{0, 500, 110, 500}, -1);
+    }
 }

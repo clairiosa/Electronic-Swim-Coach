@@ -145,7 +145,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
             e.printStackTrace();
         }
 
-        mFrameBuffer.putFrame(greyFrame, mRotationalSensor.getmRotationMatrix());
+        mFrameBuffer.putFrame(greyFrame, mRotationalSensor.getMRotationMatrix());
         return greyFrame;
     }
 
@@ -185,7 +185,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
 
-        public float[] getmRotationMatrix(){
+        public float[] getMRotationMatrix(){
             return mRotationMatrix;
         }
     }
