@@ -24,6 +24,8 @@ import org.opencv.core.Mat;
  */
 public class CameraActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
+    private FrameBuffer mFrameBuffer;
+
     private CameraBridgeViewBase mOpenCvCameraView;
     private SensorManager mSensorManager;
     private RotationalSensor mRotationalSensor;
@@ -77,6 +79,8 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         tvPitch = (TextView)findViewById(R.id.textViewX);
 
         mRotationalSensor.start();
+
+        mFrameBuffer = new FrameBuffer();
     }
 
     @Override
@@ -124,9 +128,9 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                String azimuth=Float.toString(mRotationalSensor.getAzimuth());
-                String pitch=Float.toString(mRotationalSensor.getPitch());
-                String roll=Float.toString(mRotationalSensor.getRoll());
+                String azimuth=Float.toString(mFrameBuffer.getAzimuth());
+                String pitch=Float.toString(mFrameBuffer.getPitch());
+                String roll=Float.toString(mFrameBuffer.getRoll());
 
                 tvAzimuth.setText(azimuth);
                 tvPitch.setText(pitch);
@@ -141,7 +145,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
             e.printStackTrace();
         }
 
-
+        mFrameBuffer.putFrame(greyFrame, mRotationalSensor.getMRotationMatrix());
         return greyFrame;
     }
 
@@ -150,7 +154,6 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
 
         private Sensor mRotationVectorSensor;
         private final float[] mRotationMatrix = new float[16];
-        private final float[] orientation = new float[3];
 
         public RotationalSensor() {
             Log.i(TAG, "RotationalSensor Initialized");
@@ -174,8 +177,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         public void onSensorChanged(SensorEvent event) {
             Log.i(TAG, "RotationalSensor Changed");
             if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
-                SensorManager.getRotationMatrixFromVector(mRotationMatrix , event.values);
-                SensorManager.getOrientation(mRotationMatrix, orientation);
+                SensorManager.getRotationMatrixFromVector(mRotationMatrix, event.values);
             }
         }
 
@@ -183,17 +185,8 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
 
-        public float getAzimuth(){
-            return orientation[0];
-        }
-
-        public float getPitch(){
-            return orientation[1];
-        }
-
-        public float getRoll(){
-            return orientation[2];
+        public float[] getMRotationMatrix(){
+            return mRotationMatrix;
         }
     }
-
 }
