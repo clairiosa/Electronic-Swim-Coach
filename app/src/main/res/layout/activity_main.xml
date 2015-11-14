@@ -11,20 +11,12 @@
     tools:context=".HelloActivity" >
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tutorial"
-        android:layout_above="@+id/button2"
-        android:layout_alignStart="@+id/bRecording" />
-
-    <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="About Us"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/button1" />
+        android:layout_alignStart="@+id/bRecording" />
 
     <Button
         android:layout_width="wrap_content"
@@ -41,7 +33,7 @@
         android:id="@+id/bLeft"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignStart="@+id/button1" />
+        android:layout_alignStart="@+id/bRecording" />
 
     <Button
         android:layout_width="wrap_content"
