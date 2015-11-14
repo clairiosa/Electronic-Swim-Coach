@@ -31,24 +31,5 @@ public class ImageProcessingThread implements Runnable {
 
         Mat kernelClose = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5,5));
         Imgproc.morphologyEx(frame, frame, Imgproc.MORPH_CLOSE, kernelClose);
-
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Mat hierarchy = new Mat();
-        //Mat hierarchy = new Mat(200, 200, CvType.CV_8UC1, new Scalar(0));
-
-        Imgproc.findContours(frame, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
-        int largest_area=0;
-//			pw.println("Error finding contours");
-        int largest_contour_index=0;
-        for( int i = 0; i< contours.size(); i++ ) // iterate through each contour.
-        {
-            int a=(int)Imgproc.contourArea(contours.get(i), false);  //  Find the area of contour
-            if(a>largest_area){
-                largest_area=a;
-                largest_contour_index=i;                //Store the index of largest contour
-            }
-        }
-        Scalar color = new Scalar( 255,255,255);
-        Imgproc.drawContours(frame, contours, largest_contour_index, color);
     }
 }

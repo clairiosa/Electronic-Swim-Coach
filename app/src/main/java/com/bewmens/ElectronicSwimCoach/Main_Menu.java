@@ -31,17 +31,7 @@ public class Main_Menu extends Activity implements TextToSpeech.OnInitListener{
 
 		//set up the button sound
 		final MediaPlayer mpButtonClick = MediaPlayer.create(this, R.raw.button_click);
-		
-		//button1
-		
-		Button bStartFilming = (Button) findViewById(R.id.button1);
-		bStartFilming.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.TUTORIALONE"));
-				mpButtonClick.start();
-			}
-		});
+
 		
 		//button2
 		Button bAbout = (Button) findViewById(R.id.button2);
