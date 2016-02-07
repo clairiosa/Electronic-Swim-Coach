@@ -11,20 +11,22 @@
     tools:context=".HelloActivity" >
 
     <Button
-        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Us"
+        android:text="Camera"
+        android:id="@+id/bCamera"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/bRecording" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Camera"
+        android:text="Record"
         android:id="@+id/bRecording"
+        android:layout_below="@+id/bRight"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
+        android:layout_marginTop="57dp" />
+
 
     <Button
         android:layout_width="wrap_content"
@@ -32,8 +34,7 @@
         android:text="Left"
         android:id="@+id/bLeft"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignStart="@+id/bRecording" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -41,6 +42,6 @@
         android:text="Right"
         android:id="@+id/bRight"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

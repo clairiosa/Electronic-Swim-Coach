@@ -1,13 +1,14 @@
 package com.bewmens.ElectronicSwimCoach;
 
-import com.bewmens.ElectronicSwimCoach.ImageProcessingThread;
-
 import android.app.Activity;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -18,20 +19,23 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import java.util.ArrayList;
-import java.util.List;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-
-import org.opencv.core.Point;
-import org.opencv.core.Core;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
+import org.opencv.imgcodecs.Imgcodecs;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Dave on 2015-11-09.
  */
-public class CameraActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class RecordActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     private FrameBuffer mFrameBuffer;
 
@@ -39,11 +43,19 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
     private SensorManager mSensorManager;
     private RotationalSensor mRotationalSensor;
 
-    private TextView tvAzimuth;
-    private TextView tvPitch;
-    private TextView tvRoll;
+    String gyro;
+    Mat cameraFrame;
+    FileWriter writer;
+    File sensorFile;
+    File mediaFile;
+    File mediaStorageDir;
+    String timeStamp;
+    String filename;
+    int frameNum;
 
-    private static final String TAG = "ESC::CameraActivity";
+
+
+    private static final String TAG = "ESC::RecordActivity";
 
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
@@ -63,7 +75,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         }
     };
 
-    public CameraActivity(){
+    public RecordActivity(){
         Log.i(TAG, "New " + this.getClass());
     }
 
@@ -76,16 +88,44 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
 
         mRotationalSensor = new RotationalSensor();
 
+        mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "ESC_Frames");
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.e(TAG, "failed to create directory");
+            }
+        }
+
+        timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        frameNum = 0;
+
+        sensorFile = new File(mediaStorageDir.getPath(), timeStamp + ".txt");
+
+        if (!sensorFile.exists()) {
+            try {
+                sensorFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            writer = new FileWriter(sensorFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_camera);
+        setContentView(R.layout.activity_record);
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.HelloOpenCvView);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setMaxFrameSize(800, 480);
+
         mOpenCvCameraView.setCvCameraViewListener(this);
 
-        tvAzimuth = (TextView)findViewById(R.id.textViewZ);
-        tvRoll = (TextView)findViewById(R.id.textViewY);
-        tvPitch = (TextView)findViewById(R.id.textViewX);
 
         mRotationalSensor.start();
 
@@ -120,6 +160,11 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
         mRotationalSensor.stop();
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onCameraViewStarted(int width, int height) {
@@ -130,39 +175,27 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        //**ZEROING RED AND GREEN CHANNELS AND CONVERT TO GRAYSCLALE BASED ON ONLY THE BLUE CHANNEL**
-        //		List<Mat> lRgb = new ArrayList<Mat>(3);
-        //		Core.split(inputFrame,lRgb );
-        //		Mat greyFrame = lRgb.get(2);
 
-        Mat greyFrame = inputFrame.gray();
-        Mat colorFrame = inputFrame.rgba();
+        gyro = Float.toString(mFrameBuffer.getAzimuth()) + "," + Float.toString(mFrameBuffer.getPitch())  + "," + Float.toString(mFrameBuffer.getRoll()) + ",";
+        cameraFrame = inputFrame.rgba();
+        frameNum++;
+        filename = File.separator + timeStamp + "_frame_" + frameNum + ".png";
+        mediaFile = new File(mediaStorageDir.getPath(),filename);
+        filename = mediaFile.toString();
+        if (Imgcodecs.imwrite(filename, cameraFrame))
+            Log.i(TAG, "Wrote file to " + filename);
+        else
+            Log.i(TAG, "FAILED " + filename);
 
-        Thread thread = new Thread(new ImageProcessingThread(greyFrame, colorFrame));
-        thread.start();
-
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String azimuth=Float.toString(mFrameBuffer.getAzimuth());
-                String pitch=Float.toString(mFrameBuffer.getPitch());
-                String roll=Float.toString(mFrameBuffer.getRoll());
-
-                tvAzimuth.setText(azimuth);
-                tvPitch.setText(pitch);
-                tvRoll.setText(roll);
-            }
-        });
 
         try {
-            thread.join();
-        } catch (InterruptedException e){
+            writer.append(gyro);
+            writer.flush();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-       mFrameBuffer.putFrame(colorFrame, mRotationalSensor.getMRotationMatrix());
-       return colorFrame;
+        mFrameBuffer.putFrame(cameraFrame, mRotationalSensor.getMRotationMatrix());
+        return cameraFrame;
     }
 
 

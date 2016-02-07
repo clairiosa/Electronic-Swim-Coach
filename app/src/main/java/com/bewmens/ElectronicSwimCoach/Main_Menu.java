@@ -1,12 +1,16 @@
 package com.bewmens.ElectronicSwimCoach;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +24,7 @@ import java.util.Locale;
 public class Main_Menu extends Activity implements TextToSpeech.OnInitListener{
 
 
+
     private TextToSpeech mEngine;
     private Vibrator mVibrator;
 
@@ -29,27 +34,60 @@ public class Main_Menu extends Activity implements TextToSpeech.OnInitListener{
 		super.onCreate(savedState);
 		setContentView(R.layout.activity_main);
 
+		// Here, thisActivity is the current activity
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
+
+			// Should we show an explanation?
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)) {
+
+			} else {
+
+
+				ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+
+				// MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+				// app-defined int constant. The callback method gets the
+				// result of the request.
+			}
+		}
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+
+
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
 		//set up the button sound
 		final MediaPlayer mpButtonClick = MediaPlayer.create(this, R.raw.button_click);
 
-		
-		//button2
-		Button bAbout = (Button) findViewById(R.id.button2);
-		bAbout.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.ABOUT"));
-				mpButtonClick.start();
-			}
-		});
+
 
 		//Begin button
 
-		Button bRecording = (Button) findViewById(R.id.bRecording);
+		Button bRecording = (Button) findViewById(R.id.bCamera);
 		bRecording.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.CAMERA"));
+				mpButtonClick.start();
+			}
+		});
+
+		Button bCamera = (Button) findViewById(R.id.bRecording);
+		bCamera.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.RECORD"));
 				mpButtonClick.start();
 			}
 		});
