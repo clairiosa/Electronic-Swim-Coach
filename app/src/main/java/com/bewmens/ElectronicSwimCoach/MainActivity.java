@@ -25,11 +25,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//this.loadlibs();  //load openCV and other needed libraries
-		setContentView(R.layout.splash);
+		//setContentView(R.layout.splash);
         
-        mpSplash = MediaPlayer.create(this, R.raw.mario);
+        //mpSplash = MediaPlayer.create(this, R.raw.mario);
         //mpSplash.start();
-        
+        /*
         Thread logoTimer= new Thread(){
         	public void run(){
         	try{
@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
         	}
         };
         logoTimer.start();
+        */
+        startActivity(new Intent("com.bewmens.ElectronicSwimCoach.CLEARSCREEN"));
     }
 
     

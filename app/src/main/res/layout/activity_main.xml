@@ -3,45 +3,59 @@
     android:id="@+id/gui_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/hellobgrnd"
+    android:background="@color/background"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HelloActivity" >
 
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Camera"
         android:id="@+id/bCamera"
-        android:layout_alignParentBottom="true"
+
+        android:text="Run"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+
+        android:layout_width="240dp"
+        android:layout_height="100dp"
+        android:background="@drawable/button"
+        android:layout_marginTop="106dp"
+        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/bRecord"
+
         android:text="Record"
-        android:id="@+id/bRecording"
-        android:layout_below="@+id/bRight"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp" />
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
 
+        android:layout_width="240dp"
+        android:layout_height="100dp"
+        android:background="@drawable/buttonshape"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/bCamera"
+        android:layout_alignStart="@+id/bCamera" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Left"
-        android:id="@+id/bLeft"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Electronic Swim Coach"
+        android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Right"
-        android:id="@+id/bRight"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="David Bews   Jonathan Oommen"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

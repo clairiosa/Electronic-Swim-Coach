@@ -23,6 +23,7 @@
 
         <activity
             android:name=".Main_Menu"
+            android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.bewmens.ElectronicSwimCoach.CLEARSCREEN"/>

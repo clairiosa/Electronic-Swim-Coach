@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class Main_Menu extends Activity implements TextToSpeech.OnInitListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedState);
 		setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		// Here, thisActivity is the current activity
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
@@ -75,15 +77,15 @@ public class Main_Menu extends Activity implements TextToSpeech.OnInitListener{
 		//Begin button
 
 		Button bRecording = (Button) findViewById(R.id.bCamera);
-		bRecording.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent("com.bewmens.ElectronicSwimCoach.CAMERA"));
+        bRecording.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                startActivity(new Intent("com.bewmens.ElectronicSwimCoach.CAMERA"));
 				mpButtonClick.start();
 			}
 		});
 
-		Button bCamera = (Button) findViewById(R.id.bRecording);
+		Button bCamera = (Button) findViewById(R.id.bRecord);
 		bCamera.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -91,20 +93,6 @@ public class Main_Menu extends Activity implements TextToSpeech.OnInitListener{
 				mpButtonClick.start();
 			}
 		});
-
-        Button bLeft = (Button) findViewById(R.id.bLeft);
-        bLeft.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                speakLeft();
-            }
-        });
-
-        Button bRight = (Button) findViewById(R.id.bRight);
-        bRight.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                speakRight();
-            }
-        });
 
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         mEngine = new TextToSpeech(this, this);

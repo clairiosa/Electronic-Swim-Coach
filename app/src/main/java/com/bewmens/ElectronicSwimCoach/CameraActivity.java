@@ -174,15 +174,17 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
             e.printStackTrace();
         }
 
+
         Log.d("!!!!!!!!", "eol " + eol[0]);
-        if (eol[0] == 3 && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2) {
+        if ((eol[0] % 10  == 2) && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2) {
             speakEnd();
         }
-
-        if ((eol[1] % 10 == 2) && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2){
-            speakLeft();
-        } else if ((eol[2] % 10 == 2) && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2){
-            speakRight();
+        if (mFrameBuffer.getRoll() == 0 && mFrameBuffer.getPitch() ==0 && mFrameBuffer.getAzimuth() == 0) {
+            if ((eol[1] % 10 == 2) && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2) {
+                speakLeft();
+            } else if ((eol[2] % 10 == 2) && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2) {
+                speakRight();
+            }
         }
 
         mFrameBuffer.putFrame(colorFrame, mRotationalSensor.getMRotationMatrix());
