@@ -21,75 +21,132 @@ public class ImageProcessingThread implements Runnable {
 
     private Mat frame;
     private Mat colorFrame;
-    public ImageProcessingThread(Mat frame, Mat colorFrame){
+    Mat lines;
+    int threshold;
+    int minLineSize;
+    int lineGap;
+    double[][] vectorLines;
+    double maxLen;
+    int maxLenPoint;
+    double len;
+    double x1, x2, y1, y2;
+    Point start;
+    Point end;
+
+    int maxX;
+    int maxY;
+
+    int right;
+    int left;
+
+    int[] eol;
+
+    boolean endOfLine = false;
+
+    public ImageProcessingThread(Mat frame, Mat colorFrame, int[] eol, int maxX, int maxY){
         this.frame = frame;
         this.colorFrame = colorFrame;
+
+        this.maxX = maxX;
+        this.maxY = maxY;
+
+        this.eol = eol;
     }
 
     @Override
     public void run() {
         org.opencv.core.Size s = new Size(5,5);
-        Imgproc.GaussianBlur(frame, frame, s, 0);
+        Imgproc.GaussianBlur(frame, frame, s, 0);  //2-3 frames
 
-        //Mat img_bw = null;
-        Imgproc.threshold(frame, frame, 127, 255, Imgproc.THRESH_OTSU);
+        Imgproc.threshold(frame, frame, 127, 255, Imgproc.THRESH_OTSU); // neg
+
+
 
         Mat kernelClose = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5,5));
         Imgproc.morphologyEx(frame, frame, Imgproc.MORPH_CLOSE, kernelClose);
 
-        Imgproc.Canny(frame, frame, 80, 100);
 
-        Mat lines = new Mat(frame.size(),org.opencv.core.CvType.CV_8UC1);
+        Imgproc.Canny(frame, frame, 80, 100); //6-8 frames
+        lines = new Mat(frame.size(),org.opencv.core.CvType.CV_8UC1);
 
-        int threshold = 50;
-        int minLineSize = 20;
-        int lineGap = 20;
+        threshold = 100;
+        minLineSize = 100;
+        lineGap = 50;
 
         Imgproc.HoughLinesP(frame, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
-        Log.i("~~~~~~~~~~~", lines.cols() + " " + lines.rows());
+        //Log.i("~~~~~~~~~~~", lines.cols() + " " + lines.rows());
 
-        double[][] vectorLines = new double[lines.rows()][4];
-        double maxLen = 0;
-        int maxLenPoint = 0;
+        vectorLines = new double[lines.rows()][4];
+        maxLen = 0;
+        maxLenPoint = 0;
+
+        double maxRight = 0;
+        double maxLeft = 288;
+
+
+        //Log.i("~~~~~~~~~~~", "Loop start");
         for (int x = 0; x < lines.rows(); x++) {
-            Log.i("~~~~~~~~~~~", "Loop start");
             vectorLines[x] = lines.get(x, 0);
 
-            double x1 = vectorLines[x][0],
-                    y1 = vectorLines[x][1],
-                    x2 = vectorLines[x][2],
+             x1 = vectorLines[x][0];
+                    y1 = vectorLines[x][1];
+                    x2 = vectorLines[x][2];
                     y2 = vectorLines[x][3];
 
-            Log.i("~~~~~~~~~~~", "Length calculation");
-            double len = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            if (Math.abs(y2 - y1) > Math.abs(x2 - x1)) {
 
-            Log.i("~~~~~~~~~~~", "Max Length against " + len);
-            if (len > maxLen && !(((y1 == y2) && (y1 == 479)) || ((x1 == x2) && (x1 == 799)))) {
-                Log.i("~~~~~~~~~~~", "Success");
-                maxLen = len;
-                maxLenPoint = x;
+                Log.i("~~~~~~~~~~~", "x1:"+ x1 + " y1:" + y1 + " x1:" + x2 + " y2:" + y2);
+                //Log.i("~~~~~~~~~~~", "Length calculation");
+                len = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+
+                //Log.i("~~~~~~~~~~~", "Max Length against " + len);
+                if (len > maxLen) {
+                    if (!(((y1 == y2) && (y1 >= 283 || y1 <= 5)) || ((x1 == x2) && (x1 >= 595 || x1 <= 5)))) {
+                        //Log.i("~~~~~~~~~~~", "Success");
+                        maxLen = len;
+                        maxLenPoint = x;
+                    }
+                }
             }
+            if (y1 > maxRight && (y1 <= 283)) maxRight = y1;
+            if (y2 > maxRight && (y2 <= 283)) maxRight = y2;
+            if (y1 < maxLeft && (y1 >= 5)) maxLeft = y1;
+            if (y2 < maxLeft && (y2 >= 5)) maxLeft = y2;
         }
-        Log.i("~~~~~~~~~~~", "Drawing");
+        //Log.i("~~~~~~~~~~~", "Drawing");
+
         for (int x = 0; x < lines.rows(); x++) {
 
-            double x1 = vectorLines[x][0],
-                    y1 = vectorLines[x][1],
-                    x2 = vectorLines[x][2],
-                    y2 = vectorLines[x][3];
+            x1 = vectorLines[x][0];
+            y1 = vectorLines[x][1];
+            x2 = vectorLines[x][2];
+            y2 = vectorLines[x][3];
 
-            Point start = new Point(x1, y1);
-            Point end = new Point(x2, y2);
+            start = new Point(x1, y1);
+            end = new Point(x2, y2);
 
-
-            Log.i("~~~~~~~~~~~", x1 + " " + y1 + " " + x2 + " " + y2);
-            if (maxLenPoint == x) {
-                Imgproc.line(colorFrame, start, end, new Scalar(0,255,255), 3);
-            } else {
-                Imgproc.line(colorFrame, start, end, new Scalar(255, 0, 0), 3);
+            if (!(((y1 == y2) && (y1 >= 283 || y1 <= 5)) || ((x1 == x2) && (x1 >= 595 || x1 <= 5)))) {
+                if (maxLenPoint == x && (Math.abs(y2 - y1) > Math.abs(x2 - x1))) {
+                    //Log.i("~~~~~~~~~~~", x1 + " " + y1 + " " + x2 + " " + y2);
+                    Imgproc.line(colorFrame, start, end, new Scalar(255, 0, 0), 2);
+                    endOfLine = true;
+                } else {
+                    Imgproc.line(colorFrame, start, end, new Scalar(0, 255, 0), 2);
+                }
             }
-
         }
+
+        if (endOfLine == true) {
+            eol[0]++;
+        } else eol[0] = 0;
+        Log.i("~~~~~~~~~~~", "maxRight" + maxRight + " maxLeft" + maxLeft);
+        if (maxRight < 90){
+            eol[2]++;
+        } else eol[2] = 0;
+
+        if (maxLeft > (210)) {
+            eol[1]++;
+        } else eol[1] = 0;
     }
 }

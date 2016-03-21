@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -21,6 +22,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
@@ -31,7 +34,7 @@ import org.opencv.core.MatOfPoint;
 /**
  * Created by Dave on 2015-11-09.
  */
-public class CameraActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class CameraActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2, TextToSpeech.OnInitListener {
 
     private FrameBuffer mFrameBuffer;
 
@@ -42,6 +45,13 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
     private TextView tvAzimuth;
     private TextView tvPitch;
     private TextView tvRoll;
+
+    private TextToSpeech mEngine;
+
+    private int maxFrameX = 600;
+    private int maxFrameY = 360;
+
+    private int[] eol = {0,0,0};
 
     private static final String TAG = "ESC::CameraActivity";
 
@@ -80,7 +90,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         setContentView(R.layout.activity_camera);
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.HelloOpenCvView);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
-        mOpenCvCameraView.setMaxFrameSize(800, 480);
+        mOpenCvCameraView.setMaxFrameSize(maxFrameX, maxFrameY);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
         tvAzimuth = (TextView)findViewById(R.id.textViewZ);
@@ -90,6 +100,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         mRotationalSensor.start();
 
         mFrameBuffer = new FrameBuffer();
+        mEngine = new TextToSpeech(this, this);
     }
 
     @Override
@@ -138,16 +149,18 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         Mat greyFrame = inputFrame.gray();
         Mat colorFrame = inputFrame.rgba();
 
-        Thread thread = new Thread(new ImageProcessingThread(greyFrame, colorFrame));
+
+        Thread thread = new Thread(new ImageProcessingThread(greyFrame, colorFrame, eol, maxFrameX, maxFrameY));
         thread.start();
+
 
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                String azimuth=Float.toString(mFrameBuffer.getAzimuth());
-                String pitch=Float.toString(mFrameBuffer.getPitch());
-                String roll=Float.toString(mFrameBuffer.getRoll());
+                String azimuth = Float.toString(mFrameBuffer.getAzimuth());
+                String pitch = Float.toString(mFrameBuffer.getPitch());
+                String roll = Float.toString(mFrameBuffer.getRoll());
 
                 tvAzimuth.setText(azimuth);
                 tvPitch.setText(pitch);
@@ -161,8 +174,39 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
             e.printStackTrace();
         }
 
-       mFrameBuffer.putFrame(colorFrame, mRotationalSensor.getMRotationMatrix());
-       return colorFrame;
+        Log.d("!!!!!!!!", "eol " + eol[0]);
+        if (eol[0] == 3 && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2) {
+            speakEnd();
+        }
+
+        if ((eol[1] % 10 == 2) && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2){
+            speakLeft();
+        } else if ((eol[2] % 10 == 2) && Math.abs(mFrameBuffer.getRoll()) < 0.2 && Math.abs(mFrameBuffer.getPitch()) < 0.2){
+            speakRight();
+        }
+
+        mFrameBuffer.putFrame(colorFrame, mRotationalSensor.getMRotationMatrix());
+        return colorFrame;
+    }
+
+    @Override
+    public void onInit(int status) {
+        Log.d("Speech", "OnInit - Status [" + status + "]");
+
+        if (status == TextToSpeech.SUCCESS) {
+            Log.d("Speech", "Success!");
+            mEngine.setLanguage(Locale.UK);
+        }
+    }
+
+    private void speakEnd() {
+        mEngine.speak("End of lane.", TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakLeft() {
+        mEngine.speak("Left.", TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    private void speakRight() {
+        mEngine.speak("Right.", TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
 
@@ -204,5 +248,6 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         public float[] getMRotationMatrix(){
             return mRotationMatrix;
         }
+
     }
 }
